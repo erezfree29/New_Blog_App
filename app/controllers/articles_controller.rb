@@ -12,9 +12,9 @@ class ArticlesController < ApplicationController
   end
   
   def create
-    @article.new(title:"new article",body:"my new article")
+    @article = Article.new(article_params)
     if @article.save
-      redirect @article
+      redirect_to @article
     else
       render :new
     end
