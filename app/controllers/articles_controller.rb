@@ -1,6 +1,9 @@
 class ArticlesController < ApplicationController
+  http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
+
   def index
     @articles = Article.all
+    @article2 = Article.find(2)
   end
 
   def show
@@ -32,12 +35,20 @@ class ArticlesController < ApplicationController
       redirect_to @article
     else
       render :edit
+
     end
+  end
+
+  def destroy 
+    @article = Article.find(params[:id])
+    @article.destroy
+
+    redirect_to root_path
   end
 
   private
 
   def article_params
-    params.require(:article).permit(:title, :body)
+    params.require(:article).permit(:title, :body, :status)
   end
 end
